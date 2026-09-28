@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Prácticas MEP</ion-title>
+    <ion-buttons slot="end">
+      @if (guardado) {
+        <ion-button (click)="confirmarBorrar()">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="contenido">
+    <section class="selector">
+      <h2>Elige la especialidad</h2>
+      <nav>
+        <ul class="lista-especialidades">
+          @for (otra of opciones; track otra.codigo) {
+            <li>
+              <button
+                type="button"
+                class="especialidad"
+                [class.seleccionada]="esElegida(otra)"
+                (click)="elegir(otra)"
+              >
+                {{ otra.nombre }}
+              </button>
+            </li>
+          }
+        </ul>
+      </nav>
+    </section>
+
+    <section class="tarjeta-especialidad">
+      <header>
+        <p class="subtitulo">Práctica Nacional · Código {{ especialidad.codigo }}</p>
+      </header>
+
+      <ul class="datos">
+        <li>
+          <ion-icon name="list-outline"></ion-icon>
+          <ion-label>{{ especialidad.preguntas.length }} preguntas de selección única</ion-label>
+        </li>
+        <li>
+          <ion-icon name="timer-outline"></ion-icon>
+          <ion-label>{{ especialidad.duracionMinutos }} minutos en modo examen</ion-label>
+        </li>
+        <li>
+          <ion-icon name="shuffle-outline"></ion-icon>
+          <ion-label>Las opciones se mezclan en cada intento</ion-label>
+        </li>
+      </ul>
+    </section>
+
+    <section class="seccion-modo">
+      <h2>¿Cómo quieres practicar?</h2>
+
+      <ion-segment [value]="modo" (ionChange)="cambiarModo($event)">
+        <ion-segment-button value="practica">
+          <ion-icon name="book-outline"></ion-icon>
+          <ion-label>Práctica libre</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="examen">
+          <ion-icon name="timer-outline"></ion-icon>
+          <ion-label>Examen</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      @if (modo === 'practica') {
+        <p class="ayuda">
+          Sin límite de tiempo. Puedes volver más tarde, las respuestas quedan guardadas en este
+          dispositivo.
+        </p>
+      } @else {
+        <p class="ayuda">
+          Con límite de tiempo de {{ especialidad.duracionMinutos }} minutos. Al terminar el tiempo
+          se entrega automáticamente.
+        </p>
+      }
+    </section>
+
+    <section class="seccion-acciones">
+      @if (guardado) {
+        <article class="aviso-guardado">
+          <header>
+            <ion-icon name="save-outline"></ion-icon>
+            <h2>Tienes una práctica a medias</h2>
+          </header>
+          <ion-chip>
+            <ion-label>{{ respondidas }} de {{ especialidad.preguntas.length }} respondidas</ion-label>
+          </ion-chip>
+          <nav>
+            <ion-button expand="block" (click)="continuar()">
+              <ion-icon slot="start" name="play-outline"></ion-icon>
+              Continuar donde la dejaste
+            </ion-button>
+            @if (guardado.terminada) {
+              <ion-button expand="block" fill="outline" (click)="verResultados()">
+                <ion-icon slot="start" name="trophy-outline"></ion-icon>
+                Ver resultados
+              </ion-button>
+            }
+            <ion-button expand="block" fill="clear" color="medium" (click)="confirmarBorrar()">
+              Borrar progreso
+            </ion-button>
+          </nav>
+        </article>
+      }
+
+      <ion-button expand="block" size="large" (click)="comenzar()">
+        <ion-icon slot="start" name="school-outline"></ion-icon>
+        {{ guardado ? 'Empezar una práctica nueva' : 'Comenzar' }}
+      </ion-button>
+    </section>
+  </main>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-note class="pie">Práctica de preparación para la Prueba Nacional</ion-note>
+  </ion-toolbar>
+</ion-footer>

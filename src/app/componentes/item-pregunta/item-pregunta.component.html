@@ -1,0 +1,54 @@
+<article class="item">
+  <header>
+    <p class="encabezado">{{ numero }}. Lea la siguiente información:</p>
+  </header>
+
+  <section class="contenido">
+    @if (contexto) {
+      <p class="enunciado">{{ contexto }}</p>
+      <p class="texto-pregunta">{{ textoPregunta }}</p>
+    } @else {
+      <p class="enunciado">{{ textoPregunta }}</p>
+    }
+
+    @if (pregunta.codigo) {
+      <pre class="codigo">{{ pregunta.codigo }}</pre>
+    }
+
+    @if (pregunta.textoFinal) {
+      <p class="texto-final">{{ pregunta.textoFinal }}</p>
+    }
+
+    <ul class="opciones" [class.revision]="esRevision">
+      @for (posicion of [0, 1, 2]; track posicion) {
+        <li>
+          <label
+            class="opcion"
+            [class.opcion-correcta]="esRevision && esCorrecta(posicion)"
+            [class.opcion-incorrecta]="esRevision && esIncorrecta(posicion)"
+          >
+            <input
+              class="circulo"
+              type="radio"
+              [name]="'pregunta-' + numero"
+              [value]="posicion"
+              [checked]="estaSeleccionada(posicion)"
+              [disabled]="esRevision"
+              (change)="elegir(posicion)"
+            />
+            <span class="texto-opcion">{{ letra(posicion) }}) {{ textoOpcion(posicion) }}</span>
+          </label>
+        </li>
+      }
+    </ul>
+
+    @if (esRevision) {
+      <section class="justificacion">
+        <header>
+          <p class="titulo">Justificación</p>
+        </header>
+        <p class="texto-justificacion">{{ pregunta.justificacion }}</p>
+      </section>
+    }
+  </section>
+</article>

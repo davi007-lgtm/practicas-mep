@@ -1,0 +1,142 @@
+// Un ítem con el estilo de una prueba en pantalla: plano, claro y legible
+// El examen cambia --escala para acercar o alejar el texto (1 = normal)
+$texto: calc(1rem * var(--escala, 1));
+$texto-menor: calc(0.95rem * var(--escala, 1));
+
+:host {
+  display: block;
+  background: #ffffff;
+  color: #212529;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: $texto;
+  line-height: 1.5;
+}
+
+.item {
+  .encabezado {
+    margin: 0;
+    font-size: $texto;
+    font-weight: 600;
+    color: #212529;
+  }
+}
+
+.contenido {
+  // Espacio vertical generoso entre el encabezado y la información
+  margin-top: 28px;
+
+  .enunciado,
+  .texto-pregunta,
+  .texto-final {
+    margin: 0;
+    font-size: $texto;
+    line-height: 1.5;
+    color: #212529;
+  }
+
+  .texto-pregunta {
+    margin-top: 20px;
+  }
+
+  .codigo {
+    margin: 22px 0;
+    padding: 14px 16px;
+    background: #f6f7f8;
+    border: 1px solid #e5e7e9;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: $texto-menor;
+    line-height: 1.5;
+    color: #212529;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+
+  .texto-final {
+    margin-top: 20px;
+  }
+}
+
+.opciones {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+
+  // Buen espacio entre una opción y la siguiente
+  li + li {
+    margin-top: 18px;
+  }
+
+  .opcion {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    .circulo {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      margin: 3px 0 0;
+      accent-color: #1a5fb4;
+    }
+
+    .texto-opcion {
+      flex: 1 1 auto;
+      font-size: $texto;
+      line-height: 1.5;
+      color: #212529;
+    }
+  }
+
+  // En la revisión se marcan la correcta y la mal elegida
+  &.revision .opcion {
+    cursor: default;
+
+    // Que el círculo se vea igual aunque esté deshabilitado
+    .circulo {
+      opacity: 1;
+    }
+
+    &.opcion-correcta {
+      background: #e6f4ea;
+
+      .texto-opcion {
+        color: #1e6b30;
+        font-weight: 600;
+      }
+    }
+
+    &.opcion-incorrecta {
+      background: #fdeaea;
+
+      .texto-opcion {
+        color: #a51d1d;
+      }
+    }
+  }
+}
+
+.justificacion {
+  margin-top: 26px;
+  padding: 14px 16px;
+  background: #f6f7f8;
+  border-left: 4px solid #1a5fb4;
+  border-radius: 8px;
+
+  .titulo {
+    margin: 0;
+    font-size: $texto-menor;
+    font-weight: 700;
+    color: #212529;
+  }
+
+  .texto-justificacion {
+    margin: 6px 0 0;
+    font-size: $texto-menor;
+    line-height: 1.5;
+    color: #212529;
+  }
+}

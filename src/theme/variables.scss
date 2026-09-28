@@ -1,2 +1,41 @@
-// For information on how to create your own theme, please refer to:
+// Colores de la aplicación
+// Tema SIEMPRE claro: sin paleta oscura y sin modo del sistema.
 // https://ionicframework.com/docs/theming/
+
+:root {
+  // Que el navegador no aplique el modo oscuro del sistema
+  color-scheme: light;
+
+  // Colores bases
+  --ion-background-color: #ffffff;
+  --ion-text-color: #212529;
+  --ion-color-primary: #1a5fb4;
+  --ion-color-primary-rgb: 26, 95, 180;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1753a2;
+  --ion-color-primary-tint: #316cbb;
+
+  // Encabezados y pies
+  --ion-toolbar-background: #ffffff;
+  --ion-toolbar-color: #212529;
+  --ion-item-background: #ffffff;
+
+  // Tarjetas
+  --ion-card-background: #ffffff;
+
+  // Colores de apoyo
+  --ion-color-medium: #6c757d;
+  --ion-color-light: #f1f3f5;
+  --ion-color-success: #2b8a3e;
+  --ion-color-warning: #b8860b;
+  --ion-color-danger: #c92a2a;
+
+  // Bordes y fondos suaves que usan las páginas
+  --ion-color-step-50: #fbfcfd;
+  --ion-color-step-100: #f1f3f5;
+  --ion-color-step-150: #dee2e6;
+  --ion-color-step-250: #ced4da;
+  --ion-color-step-500: #adb5bd;
+  --ion-color-step-750: #495057;
+}

@@ -1,0 +1,21 @@
+<nav class="barra" aria-label="Preguntas del examen">
+  <ul class="lista">
+    @for (item of items; track item.id) {
+      @let estado = estadoDeItem(item.id);
+      <li>
+        <button
+          type="button"
+          class="item"
+          [class.actual]="item.id === posicion"
+          [class.pendiente]="estado === 'pendiente'"
+          [class.marcada]="estado === 'marcada'"
+          [class.respondida]="estado === 'respondida'"
+          [attr.aria-current]="item.id === posicion ? 'true' : null"
+          (click)="elegir(item.id)"
+        >
+          <span class="numero">{{ item.etiqueta }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+</nav>

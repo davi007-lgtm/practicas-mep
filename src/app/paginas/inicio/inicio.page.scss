@@ -1,0 +1,132 @@
+.contenido {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+
+  section {
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    margin: 0 0 4px;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+}
+
+// Lista para elegir especialidad
+.selector {
+  .lista-especialidades {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .especialidad {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--ion-color-step-250, #ced4da);
+      border-radius: 12px;
+      background: #ffffff;
+      color: #212529;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+
+      // La especialidad elegida queda resaltada
+      &.seleccionada {
+        background: #1a5fb4;
+        border-color: #1a5fb4;
+        color: #ffffff;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #0d6efd;
+        outline-offset: 1px;
+      }
+    }
+  }
+}
+
+.tarjeta-especialidad {
+  background: var(--ion-card-background, #ffffff);
+  border: 1px solid var(--ion-color-step-150, #e0e0e0);
+  border-radius: 14px;
+  padding: 16px;
+
+  .subtitulo {
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 0.85rem;
+  }
+
+  .datos {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--ion-color-step-100, #f0f0f0);
+
+      ion-icon {
+        color: var(--ion-color-primary);
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+.seccion-modo {
+  .ayuda {
+    margin: 10px 2px 0;
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.aviso-guardado {
+  border: 1px dashed var(--ion-color-primary);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    ion-icon {
+      color: var(--ion-color-primary);
+      font-size: 1.2rem;
+    }
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+}
+
+.pie {
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 10px 0;
+}

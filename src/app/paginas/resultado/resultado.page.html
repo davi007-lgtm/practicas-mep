@@ -1,0 +1,185 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Resultado</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+@if (resultado; as resumen) {
+  <ion-content>
+    <main class="contenido">
+      <section class="resumen">
+        <header>
+          <h1>Resultado de la práctica</h1>
+          <p class="subtitulo">
+            {{ especialidad.nombre }} ·
+            {{ modoPractica === 'examen' ? 'Modo examen' : 'Práctica libre' }}
+          </p>
+        </header>
+
+        <p class="puntaje">
+          {{ resumen.correctas }}<span class="total">/ {{ resumen.total }}</span>
+        </p>
+        <ion-progress-bar
+          [value]="resumen.porcentaje / 100"
+          [color]="resumen.porcentaje >= 70 ? 'success' : resumen.porcentaje >= 40 ? 'warning' : 'danger'"
+        ></ion-progress-bar>
+        <p class="porcentaje">{{ resumen.porcentaje }}% de aciertos</p>
+
+        <ul class="detalle">
+          <li>
+            <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+            <ion-label>Correctas: {{ resumen.correctas }}</ion-label>
+          </li>
+          <li>
+            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
+            <ion-label>Incorrectas: {{ resumen.incorrectas }}</ion-label>
+          </li>
+          <li>
+            <ion-icon name="help-circle-outline" color="medium"></ion-icon>
+            <ion-label>Sin responder: {{ resumen.sinResponder }}</ion-label>
+          </li>
+          <li>
+            <ion-icon name="time-outline" color="medium"></ion-icon>
+            <ion-label>
+              Tiempo usado: {{ resumen.minutosUsados }} de {{ resumen.limiteMinutos }} minutos
+            </ion-label>
+          </li>
+        </ul>
+      </section>
+
+      <section class="bloque">
+        <h2>Por nivel</h2>
+        <ul class="grupos">
+          @for (grupo of resumen.porNivel; track grupo.nombre) {
+            <li class="grupo">
+              <p class="grupo-nombre">{{ grupo.nombre }}</p>
+              <p class="grupo-cifra">{{ grupo.correctas }}/{{ grupo.total }}</p>
+              <ion-progress-bar
+                [value]="grupo.porcentaje / 100"
+                [color]="grupo.porcentaje >= 70 ? 'success' : grupo.porcentaje >= 40 ? 'warning' : 'danger'"
+              ></ion-progress-bar>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="bloque">
+        <h2>Por subárea</h2>
+        <ul class="grupos">
+          @for (grupo of resumen.porSubarea; track grupo.nombre) {
+            <li class="grupo">
+              <p class="grupo-nombre">{{ grupo.nombre }}</p>
+              <p class="grupo-cifra">{{ grupo.correctas }}/{{ grupo.total }}</p>
+              <ion-progress-bar
+                [value]="grupo.porcentaje / 100"
+                [color]="grupo.porcentaje >= 70 ? 'success' : grupo.porcentaje >= 40 ? 'warning' : 'danger'"
+              ></ion-progress-bar>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="bloque">
+        <h2>Por indicador de logro</h2>
+        <ul class="grupos">
+          @for (grupo of resumen.porIndicador; track grupo.nombre) {
+            <li class="grupo indicador">
+              <p class="grupo-nombre">{{ corto(grupo.nombre, 90) }}</p>
+              <p class="grupo-cifra">{{ grupo.correctas }}/{{ grupo.total }}</p>
+              <ion-progress-bar
+                [value]="grupo.porcentaje / 100"
+                [color]="grupo.porcentaje >= 70 ? 'success' : grupo.porcentaje >= 40 ? 'warning' : 'danger'"
+              ></ion-progress-bar>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="bloque revision">
+        <h2>Revisión de respuestas</h2>
+
+        <nav class="filtros">
+          <ion-button
+            size="small"
+            [fill]="filtro() === 'todas' ? 'solid' : 'outline'"
+            (click)="cambiarFiltro('todas')"
+          >
+            Todas
+          </ion-button>
+          <ion-button
+            size="small"
+            color="danger"
+            [fill]="filtro() === 'incorrectas' ? 'solid' : 'outline'"
+            (click)="cambiarFiltro('incorrectas')"
+          >
+            Incorrectas ({{ resumen.incorrectas }})
+          </ion-button>
+          <ion-button
+            size="small"
+            color="medium"
+            [fill]="filtro() === 'sinResponder' ? 'solid' : 'outline'"
+            (click)="cambiarFiltro('sinResponder')"
+          >
+            Sin responder ({{ resumen.sinResponder }})
+          </ion-button>
+        </nav>
+
+        <ul class="lista-revision">
+          @for (revision of revisiones; track revision.pregunta.id) {
+            <li>
+              <p class="estado-revision" [class.estado-correcto]="revision.correcta">
+                @if (revision.correcta) {
+                  <ion-icon name="checkmark-circle-outline"></ion-icon>
+                  Correcta
+                } @else if (revision.elegida === null) {
+                  <ion-icon name="help-circle-outline"></ion-icon>
+                  Sin responder
+                } @else {
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                  Incorrecta
+                }
+              </p>
+
+              <app-item-pregunta
+                [pregunta]="revision.pregunta"
+                [numero]="revision.pregunta.id"
+                [opcionesOrden]="ordenDe(revision.pregunta)"
+                [respuesta]="revision.elegida ?? undefined"
+                modo="revision"
+              ></app-item-pregunta>
+
+              <footer class="meta-pregunta">
+                <p>{{ revision.pregunta.nivel }} · {{ revision.pregunta.subarea }}</p>
+                <p>{{ corto(revision.pregunta.indicador, 110) }}</p>
+              </footer>
+            </li>
+          }
+        </ul>
+
+        @if (revisiones.length === 0) {
+          <p class="vacio">No hay preguntas que mostrar con este filtro.</p>
+        }
+      </section>
+    </main>
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button fill="outline" (click)="volver()">
+          <ion-icon slot="start" name="home-outline"></ion-icon>
+          Inicio
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="repetir()">
+          <ion-icon slot="start" name="refresh-outline"></ion-icon>
+          Repetir
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+}

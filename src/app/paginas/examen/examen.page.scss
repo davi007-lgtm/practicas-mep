@@ -1,0 +1,230 @@
+// Examen con el aspecto de una prueba en pantalla: todo claro y plano
+.encabezado {
+  --background: #ffffff;
+  --border-color: #dee2e6;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --min-height: 52px;
+  padding: 0;
+}
+
+.zoom {
+  display: flex;
+  gap: 4px;
+
+  .boton-zoom {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #3d3d3d;
+    font-size: 1.15rem;
+    cursor: pointer;
+
+    // El signo + o - va sobre el ícono de la lupa
+    .signo {
+      position: absolute;
+      right: 3px;
+      bottom: 1px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #0d6efd;
+      outline-offset: 1px;
+    }
+  }
+}
+
+.titulo {
+  --color: #212529;
+
+  .aviso,
+  .especialidad {
+    display: block;
+    line-height: 1.2;
+  }
+
+  .aviso {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1a5fb4;
+  }
+
+  .especialidad {
+    font-size: 0.85rem;
+    color: #212529;
+  }
+}
+
+.relojes {
+  display: flex;
+  gap: 10px;
+
+  .reloj {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.2;
+  }
+
+  .nombre-reloj {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6c757d;
+  }
+
+  .tiempo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #212529;
+  }
+
+  // Con menos de 10 minutos el tiempo restante se pone rojo
+  .poco-tiempo {
+    color: #c62828;
+  }
+}
+
+.barra-numeracion {
+  --background: #ffffff;
+  --border-color: #dee2e6;
+  --min-height: auto;
+  --padding-top: 4px;
+  --padding-bottom: 6px;
+}
+
+.contenido {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+// Pantalla de instrucciones
+.instrucciones {
+  h1 {
+    margin: 0 0 16px;
+    font-size: 1.3rem;
+    color: #212529;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 22px;
+    color: #212529;
+  }
+
+  li {
+    margin-bottom: 14px;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+// Pantalla Fin
+.tarjeta-fin {
+  max-width: 520px;
+  margin: 24px auto;
+  padding: 24px 20px;
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 14px;
+    font-size: 1.25rem;
+    color: #212529;
+  }
+
+  p {
+    margin: 0 0 22px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #212529;
+  }
+
+  .completar {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #1b5e20;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid #0d6efd;
+      outline-offset: 1px;
+    }
+  }
+}
+
+.avance {
+  margin-top: 18px;
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-align: center;
+  }
+}
+
+// Barra inferior fija con los tres botones
+.barra-inferior {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  background: #ffffff;
+  border-top: 1px solid #dee2e6;
+
+  .accion {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 8px;
+    border: none;
+    border-radius: 6px;
+    background: #3d3d3d;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:disabled {
+      background: #9a9a9a;
+      cursor: default;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #0d6efd;
+      outline-offset: 1px;
+    }
+  }
+}

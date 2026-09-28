@@ -1,0 +1,163 @@
+@if (estado(); as actual) {
+  <ion-header>
+    <ion-toolbar class="encabezado">
+      <ion-buttons slot="start" class="zoom">
+        <button type="button" class="boton-zoom" (click)="acercar()" aria-label="Acercar el texto">
+          <ion-icon name="search-outline"></ion-icon>
+          <span class="signo">+</span>
+        </button>
+        <button
+          type="button"
+          class="boton-zoom"
+          (click)="restablecerZoom()"
+          aria-label="Restablecer el tamaño del texto"
+        >
+          <ion-icon name="copy-outline"></ion-icon>
+        </button>
+        <button type="button" class="boton-zoom" (click)="alejar()" aria-label="Alejar el texto">
+          <ion-icon name="search-outline"></ion-icon>
+          <span class="signo">-</span>
+        </button>
+      </ion-buttons>
+
+      <ion-title class="titulo">
+        <span class="aviso">Práctica no oficial</span>
+        <span class="especialidad">{{ especialidad.nombre }}</span>
+      </ion-title>
+
+      <ion-buttons slot="end" class="relojes">
+        <span class="reloj">
+          <span class="nombre-reloj">Transcurrido</span>
+          <span class="tiempo">{{ relojTranscurrido }}</span>
+        </span>
+
+        @if (esExamen) {
+          <span class="reloj">
+            <span class="nombre-reloj">Restante</span>
+            <span class="tiempo" [class.poco-tiempo]="pocoTiempo">{{ relojRestante }}</span>
+          </span>
+        }
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-toolbar class="barra-numeracion">
+      <app-barra-items
+        [total]="total"
+        [posicion]="actual.posicion"
+        [estadoDe]="estadoDe"
+        (irA)="irAPosicion($event)"
+      ></app-barra-items>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <main class="contenido" [style.--escala]="escala">
+      @switch (actual.posicion) {
+        @case (posicionInstrucciones) {
+          <section class="instrucciones">
+            <h1>Instrucciones</h1>
+
+            <ol>
+              <li>
+                Este examen tiene <strong>{{ total }}</strong> ítems. Cada uno muestra una
+                información y una pregunta con tres opciones: A, B y C.
+              </li>
+              <li>
+                Cada pregunta tiene una sola respuesta. Toque el círculo de la opción que
+                considere correcta.
+              </li>
+              <li>
+                La barra de numeración de arriba muestra el avance: en blanco las preguntas
+                pendientes, con un tachado verde las respondidas y en amarillo las que marcó.
+                Toque un número para ir directo a esa pregunta.
+              </li>
+              <li>
+                Con el botón MARCAR PREGUNTA, en la parte de abajo, marca la pregunta que está
+                viendo para revisarla después. Puede quitarla la marca cuando quiera.
+              </li>
+              <li>
+                Mientras el examen esté abierto puede cambiar la respuesta de cualquier
+                pregunta, incluso de las que ya contestó.
+              </li>
+              @if (esExamen) {
+                <li>
+                  Tiene {{ horasExamen }} horas ({{ especialidad.duracionMinutos }} minutos) para
+                  completar el examen. El tiempo corre desde que abrió la práctica y, cuando se
+                  acaba, el examen se envía solo.
+                </li>
+              } @else {
+                <li>
+                  Esta es una práctica libre: no hay límite de tiempo. Envíe el examen cuando
+                  termine.
+                </li>
+              }
+            </ol>
+          </section>
+        }
+
+        @case (posicionFin) {
+          <section class="tarjeta-fin">
+            <h1>¡Has llegado al final del examen!</h1>
+
+            <p>
+              Antes de terminar, revisa que hayas respondido todas las preguntas. Una vez que
+              oprimas COMPLETAR SECCIÓN, el examen será enviado y no podrás modificarlo.
+            </p>
+
+            <button type="button" class="completar" (click)="confirmarEntrega()">
+              COMPLETAR SECCIÓN
+            </button>
+          </section>
+        }
+
+        @default {
+          <app-item-pregunta
+            [pregunta]="pregunta"
+            [numero]="actual.posicion"
+            [opcionesOrden]="ordenActual"
+            [respuesta]="respuestaActual"
+            [modo]="'responder'"
+            (respondio)="recibirRespuesta($event)"
+          ></app-item-pregunta>
+
+          <section class="avance">
+            <p>
+              Pregunta {{ actual.posicion }} de {{ total }} ·
+              <strong>{{ respondidas }}</strong> respondidas
+            </p>
+          </section>
+        }
+      }
+    </main>
+  </ion-content>
+
+  <ion-footer>
+    <nav class="barra-inferior" aria-label="Navegación del examen">
+      <button
+        type="button"
+        class="accion"
+        [disabled]="actual.posicion === posicionInstrucciones"
+        (click)="anterior()"
+      >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+        Anterior
+      </button>
+
+      @if (enPregunta) {
+        <button type="button" class="accion" (click)="alternarMarca()">
+          {{ marcadaActual ? 'Quitar marca' : 'Marcar pregunta' }}
+        </button>
+      }
+
+      <button
+        type="button"
+        class="accion"
+        [disabled]="actual.posicion === posicionFin"
+        (click)="siguiente()"
+      >
+        Siguiente
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </button>
+    </nav>
+  </ion-footer>
+}

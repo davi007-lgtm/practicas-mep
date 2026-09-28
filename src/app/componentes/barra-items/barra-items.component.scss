@@ -1,0 +1,123 @@
+// Barra de pestañas del examen: "i", 1 a 60 y "Fin"
+:host {
+  display: block;
+  background: #ffffff;
+  padding: 4px;
+}
+
+.barra {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+// Los botones se acomodan en varias filas
+.lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 30px;
+  padding: 0 4px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #212529;
+  font-family: inherit;
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+
+  .numero {
+    position: relative;
+    display: inline-block;
+  }
+
+  // Pendiente: blanco (ya lo tiene el botón)
+  &.pendiente {
+    background: #ffffff;
+  }
+
+  // Marcada: amarillo verdoso
+  &.marcada {
+    background: #e3eb9a;
+    border-color: #d5df80;
+  }
+
+  // Respondida: número tachado con una X verde
+  &.respondida {
+    .numero {
+      // El tachado
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -12%;
+        width: 124%;
+        height: 2px;
+        margin-top: -1px;
+        background: #2e7d32;
+      }
+
+      // La X, con dos líneas cruzadas
+      &::after {
+        content: '';
+        position: absolute;
+        top: -7px;
+        right: -9px;
+        width: 11px;
+        height: 11px;
+        background:
+          linear-gradient(45deg, transparent 42%, #2e7d32 42%, #2e7d32 58%, transparent 58%),
+          linear-gradient(-45deg, transparent 42%, #2e7d32 42%, #2e7d32 58%, transparent 58%);
+      }
+    }
+  }
+
+  // Actual: fondo gris oscuro, número blanco y en negrita
+  &.actual {
+    background: #3d3d3d;
+    border-color: #3d3d3d;
+    color: #ffffff;
+
+    .numero {
+      font-weight: 700;
+    }
+
+    // Si además está marcada o respondida, el tachado y la X se aclaran
+    // para que se vean sobre el fondo oscuro
+    &.respondida {
+      .numero {
+        &::before {
+          background: #8fdc9f;
+        }
+
+        &::after {
+          background:
+            linear-gradient(45deg, transparent 42%, #8fdc9f 42%, #8fdc9f 58%, transparent 58%),
+            linear-gradient(-45deg, transparent 42%, #8fdc9f 42%, #8fdc9f 58%, transparent 58%);
+        }
+      }
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 1px;
+  }
+
+  &:active {
+    opacity: 0.75;
+  }
+}

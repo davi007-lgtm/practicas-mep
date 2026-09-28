@@ -26,12 +26,10 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 /**
- * Ionic Dark Mode
+ * Tema claro
  * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
+ * Esta aplicación es SIEMPRE clara, así que no se importa ninguna
+ * paleta oscura de Ionic (dark.always, dark.class ni dark.system).
+ * Los colores están en src/theme/variables.scss.
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
