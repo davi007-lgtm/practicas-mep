@@ -1,0 +1,7 @@
+{
+  "name": "practicas-mep",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
