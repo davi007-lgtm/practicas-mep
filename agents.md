@@ -9,7 +9,7 @@ Stack: Ionic + Angular standalone. Sin app.module.ts.
 - Entrega archivos completos, no diffs.
 - Interfaz en español.
 
-Datos ya hechos (NO modificar): src/app/datos/especialidad.modelo.ts, src/app/datos/3015.ts (exporta especialidad3015), src/app/datos/2011.ts (exporta especialidad2011) y src/app/datos/especialidad3016.ts (exporta especialidad3016). Las especialidades disponibles están en src/app/datos/especialidades.ts, que es la única lista que hay que editar para agregar una nueva. Cada especialidad se guarda aparte en el localStorage con la llave "practica_<codigo>", así que el estudiante puede tener varias a la vez.
+Datos ya hechos (NO modificar): src/app/datos/especialidad.modelo.ts, src/app/datos/3015.ts (exporta especialidad3015) y src/app/datos/especialidad3016.ts (exporta especialidad3016). Las especialidades disponibles están en src/app/datos/especialidades.ts, que es la única lista que hay que editar para agregar o quitar una. Cada especialidad se guarda aparte en el localStorage con la llave "practica_<codigo>", así que el estudiante puede tener varias a la vez.
 Cada Pregunta tiene: id, nivel, subarea, indicador, texto, codigo?, textoFinal?, opciones (3), correcta (0=A,1=B,2=C, orden original), justificacion.
 Si una pregunta tiene codigo: mostrar texto, luego codigo en un <pre>, luego textoFinal.
 
